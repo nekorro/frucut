@@ -4,9 +4,12 @@ use std::{
     fs::File,
     io::{self, BufRead, BufReader},
 };
+use encoding_rs::WINDOWS_1251;
+use encoding_rs_io::DecodeReaderBytesBuilder;
 
 pub fn run(config: &Config) -> io::Result<()> {
-    let mut f = BufReader::new(File::open(config.filename)?);
+    let file = File::open(config.filename)?;
+    let mut f = BufReader::new(DecodeReaderBytesBuilder::new().encoding(Some(WINDOWS_1251)).build(file));
     let re = Regex::new(config.query).unwrap();
     let re_start = Regex::new(config.start_pattern).unwrap();
     let re_end = Regex::new(config.end_pattern).unwrap();
@@ -14,6 +17,7 @@ pub fn run(config: &Config) -> io::Result<()> {
     let mut msg_bound = false;
     let mut msg_found = false;
     let mut bytes_read: usize = f.read_line(&mut string_buffer)?;
+    let mut q = String::new();
 
     while bytes_read > 0 {
         let last_string = &string_buffer[&string_buffer.len() - bytes_read..];
@@ -46,6 +50,9 @@ pub fn run(config: &Config) -> io::Result<()> {
         }
 
         bytes_read = f.read_line(&mut string_buffer)?;
+        if bytes_read == 0 {
+            q.push_str(&string_buffer);
+        }
     }
 
     if msg_found {

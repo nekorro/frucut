@@ -17,7 +17,6 @@ pub fn run(config: &Config) -> io::Result<()> {
     let mut msg_bound = false;
     let mut msg_found = false;
     let mut bytes_read: usize = f.read_line(&mut string_buffer)?;
-    let mut q = String::new();
 
     while bytes_read > 0 {
         let last_string = &string_buffer[&string_buffer.len() - bytes_read..];
@@ -50,9 +49,6 @@ pub fn run(config: &Config) -> io::Result<()> {
         }
 
         bytes_read = f.read_line(&mut string_buffer)?;
-        if bytes_read == 0 {
-            q.push_str(&string_buffer);
-        }
     }
 
     if msg_found {

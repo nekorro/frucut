@@ -1,0 +1,53 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'frucut'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=frucut",
+                    "--package=frucut"
+                ],
+                "filter": {
+                    "name": "frucut",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+                "-f",
+                "D:\\epayint_93315.Jan5.1",
+                "-q","12345"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'frucut'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=frucut",
+                    "--package=frucut"
+                ],
+                "filter": {
+                    "name": "frucut",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+                "-f",
+                "D:\\epayint_93315.Jan5.1",
+                "-q","12345"
+            ],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
